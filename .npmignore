@@ -1,0 +1,11 @@
+node_modules/
+.npmignore
+docs/
+.editorconfig
+.gitattributes
+.gitignore
+docs.cjs
+tsconfig.json
+tsconfig.tsbuildinfo
+/**/*.ts
+!/**/*.d.ts
