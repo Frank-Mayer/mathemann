@@ -62,6 +62,10 @@ for (const f of fs.readdirSync(dirs.docs)) {
               /(?<=\]\()[\.\/]+[\.\/\S]+(?=\))/g,
               (str) => "./" + str.split("/").pop()
             )
+            .replace(
+              /\.\/README/gi,
+              "https://github.com/Frank-Mayer/mathemann/wiki"
+            )
         );
       }
     }
