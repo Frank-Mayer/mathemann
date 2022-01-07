@@ -4,4 +4,4 @@ Math library
 
 [Generated Documentation](https://github.com/Frank-Mayer/mathemann/wiki)
 
-![Mathemann](mathemann.png)
+![Mathemann](https://github.com/Frank-Mayer/mathemann/blob/main/mathemann.png)
