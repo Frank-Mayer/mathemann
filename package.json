@@ -2,7 +2,7 @@
   "name": "@frank-mayer/mathemann",
   "displayName": "mathemann",
   "version": "0.0.1",
-  "type": "module",
+  "type": "commonjs",
   "description": "Math library",
   "main": "index.js",
   "types": "/",
@@ -10,9 +10,10 @@
     "bin": "/"
   },
   "scripts": {
-    "build": "yarn run tsc -p .",
+    "build": "yarn run tsc -p ./tsconfig.json",
     "deploy": "yarn run build && yarn publish && yarn docs",
-    "docs": "rm -rf ./docs/* && rm -rf ../mathemann.wiki/*.md && node docs.cjs"
+    "docs": "rm -rf ./docs/* && rm -rf ../mathemann.wiki/*.md && node docs.cjs",
+    "test": "node ./commonjs-build.cjs"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,10 @@
   },
   "homepage": "https://github.com/Frank-Mayer/mathemann#readme",
   "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "jest": "^27.4.7",
     "jsdoc-to-markdown": "^7.1.0",
+    "ts-jest": "^27.1.2",
     "typedoc": "^0.22.10",
     "typedoc-github-wiki-theme": "^0.6.0",
     "typedoc-plugin-markdown": "^3.11.9",

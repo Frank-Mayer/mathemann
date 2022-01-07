@@ -7,14 +7,11 @@
     "composite": true /* Enable constraints that allow a TypeScript project to be used with project references. */,
 
     /* Language and Environment */
-    "target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
-    "lib": [
-      "ESNext"
-    ] /* Specify a set of bundled library declaration files that describe the target runtime environment. */,
+    "target": "ES5" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     "useDefineForClassFields": true /* Emit ECMAScript-standard-compliant class fields. */,
 
     /* Modules */
-    "module": "ESNext" /* Specify what module code is generated. */,
+    "module": "CommonJS" /* Specify what module code is generated. */,
     "rootDir": "./" /* Specify the root folder within your source files. */,
     "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
     "baseUrl": "./node_modules" /* Specify the base directory to resolve non-relative module names. */,
@@ -34,7 +31,7 @@
     /* Emit */
     "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
     "declarationMap": false /* Create sourcemaps for d.ts files. */,
-    "outDir": "./" /* Specify an output folder for all emitted files. */,
+    "outDir": "./cjs/" /* Specify an output folder for all emitted files. */,
     "removeComments": false /* Disable emitting comments. */,
     "importHelpers": false /* Allow importing helper functions from tslib once per project, instead of including them per-file. */,
     "importsNotUsedAsValues": "error" /* Specify emit/checking behavior for imports that are only used for types */,
@@ -45,7 +42,7 @@
     "noEmitHelpers": true /* Disable generating custom helper functions like `__extends` in compiled output. */,
     "noEmitOnError": true /* Disable emitting files if any type checking errors are reported. */,
     "preserveConstEnums": true /* Disable erasing `const enum` declarations in generated code. */,
-    "declarationDir": "./" /* Specify the output directory for generated declaration files. */,
+    "declarationDir": "./cjs/" /* Specify the output directory for generated declaration files. */,
 
     /* Interop Constraints */
     "isolatedModules": true /* Ensure that each file can be safely transpiled without relying on other imports. */,
@@ -79,10 +76,5 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "exclude": ["node_modules", "__tests__", "cjs"],
-  "typedocOptions": {
-    "entryPoints": ["./index.ts"],
-    "out": "./docs/",
-    "theme": "markdown"
-  }
+  "exclude": ["node_modules", "__tests__", "cjs"]
 }

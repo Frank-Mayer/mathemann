@@ -1,7 +1,16 @@
 docs/
+cjs/
 node_modules/
+test_reports/
 package-lock.json
-tsconfig.tsbuildinfo
+*.tsbuildinfo
 *.js
+*.cjs
+*.mjs
 *.map
 *.d.ts
+!*.config.js
+!*-build.js
+!*-build.cjs
+!*-build.mjs
+!__tests__/**/*
