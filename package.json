@@ -2,7 +2,7 @@
   "name": "@frank-mayer/mathemann",
   "displayName": "mathemann",
   "version": "0.0.1",
-  "type": "commonjs",
+  "type": "module",
   "description": "Math library",
   "main": "index.js",
   "types": "/",
@@ -41,6 +41,6 @@
     "typedoc": "^0.22.10",
     "typedoc-github-wiki-theme": "^0.6.0",
     "typedoc-plugin-markdown": "^3.11.9",
-    "typescript": "^4.5.4"
+    "typescript": "^4.6.0-dev.20220107"
   }
 }

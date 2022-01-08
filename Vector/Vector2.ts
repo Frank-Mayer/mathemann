@@ -13,6 +13,36 @@ export class Vector2 implements IVector {
   }
 
   /**
+   * @returns The dimension of this vector at the given index.
+   */
+  public get(index: number): number {
+    switch (index) {
+      case 0:
+        return this.x;
+      case 1:
+        return this.y;
+      default:
+        throw new Error("Index out of bounds.");
+    }
+  }
+
+  /**
+   * Sets the value for the dimension of this vector at the given index.
+   */
+  public set(index: number, value: number): void {
+    switch (index) {
+      case 0:
+        this.x = value;
+        break;
+      case 1:
+        this.y = value;
+        break;
+      default:
+        throw new Error("Index out of bounds.");
+    }
+  }
+
+  /**
    * Creates a new 2d vector from this and adds up the given 2d vector value.
    */
   public plus(v: Vector2 | number): Vector2 {
@@ -174,11 +204,11 @@ export class Vector2 implements IVector {
   public normalize(): Vector2 {
     const length = this.length();
 
-    if (length === 0) {
+    if (length !== 0) {
+      return new Vector2(this.x / length, this.y / length);
+    } else {
       return new Vector2(0, 0);
     }
-
-    return new Vector2(this.x / length, this.y / length);
   }
 
   /**

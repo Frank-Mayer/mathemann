@@ -16,6 +16,41 @@ export class Vector3 implements IVector {
   }
 
   /**
+   * @returns The dimension of this vector at the given index. NaN if index is out of bounds.
+   */
+  public get(index: number): number {
+    switch (index) {
+      case 0:
+        return this.x;
+      case 1:
+        return this.y;
+      case 2:
+        return this.z;
+      default:
+        throw new Error("Index out of bounds.");
+    }
+  }
+
+  /**
+   * Sets the value for the dimension of this vector at the given index.
+   */
+  public set(index: number, value: number): void {
+    switch (index) {
+      case 0:
+        this.x = value;
+        break;
+      case 1:
+        this.y = value;
+        break;
+      case 2:
+        this.z = value;
+        break;
+      default:
+        throw new Error("Index out of bounds.");
+    }
+  }
+
+  /**
    * Creates a new 3d vector and adds up the given 3d vector value.
    */
   public plus(v: Vector3 | number): Vector3 {
@@ -198,11 +233,11 @@ export class Vector3 implements IVector {
   public normalize(): Vector3 {
     const length = this.length();
 
-    if (length === 0) {
+    if (length !== 0) {
+      return new Vector3(this.x / length, this.y / length, this.z / length);
+    } else {
       return new Vector3(0, 0, 0);
     }
-
-    return new Vector3(this.x / length, this.y / length, this.z / length);
   }
 
   /**

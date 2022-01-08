@@ -1,98 +1,104 @@
 import type { IRotator } from "./IRotator";
 import type { IVector } from "../Vector/IVector";
 import { Vector3 } from "../Vector/Vector3";
-import { degToRad } from "./Math";
+import { radToDeg } from "./Math";
 
-const mapToRotation = (rot: number) => {
+const mapToRad = (rot: number) => {
   while (rot < 0) {
-    rot += 360;
+    rot += 2 * Math.PI;
   }
 
-  return rot % 360;
+  return rot % (2 * Math.PI);
 };
 
+/**
+ * 3D rotation vector.
+ */
 export class Rotator3 implements IRotator {
   /** @internal */
-  protected _x: number;
+  protected _xDeg: number;
   /** @internal */
   protected _xRad: number;
 
   /** @internal */
-  protected _y: number;
+  protected _yDeg: number;
   /** @internal */
   protected _yRad: number;
 
   /** @internal */
-  protected _z: number;
+  protected _zDeg: number;
   /** @internal */
   protected _zRad: number;
 
   public readonly dimension: 3 = 3;
 
+  /**
+   * Create a new rotator from the given radian values.
+   */
   constructor(x: number = 0, y: number = 0, z: number = 0) {
-    this._x = mapToRotation(x);
-    this._xRad = degToRad(this._x);
-    this._y = mapToRotation(y);
-    this._yRad = degToRad(this._y);
-    this._z = mapToRotation(z);
-    this._zRad = degToRad(this._z);
+    this._xRad = mapToRad(x);
+    this._xDeg = radToDeg(this._xRad);
+    this._yRad = mapToRad(y);
+    this._yDeg = radToDeg(this._yRad);
+    this._zRad = mapToRad(z);
+    this._zDeg = radToDeg(this._zRad);
   }
 
   /**
    * x axis rotation in degrees.
    */
-  public get x() {
-    return this._x;
+  public get xDeg() {
+    return this._xDeg;
   }
 
   /**
    * x axis rotation in radiants.
    */
-  public get xRad() {
+  public get x() {
     return this._xRad;
   }
 
   public set x(x: number) {
-    this._x = mapToRotation(x);
-    this._xRad = degToRad(this._x);
+    this._xRad = mapToRad(x);
+    this._xDeg = radToDeg(this._xRad);
   }
 
   /**
    * y axis rotation in degrees.
    */
-  public get y() {
-    return this._y;
+  public get yDeg() {
+    return this._yDeg;
   }
 
   /**
    * y axis rotation in radiants.
    */
-  public get yRad() {
-    return this._zRad;
+  public get y() {
+    return this._yRad;
   }
 
   public set y(y: number) {
-    this._y = mapToRotation(y);
-    this._yRad = degToRad(this._y);
+    this._yRad = mapToRad(y);
+    this._yDeg = radToDeg(this._yRad);
   }
 
   /**
    * z axis rotation in degrees.
    */
-  public get z() {
-    return this._z;
+  public get zDeg() {
+    return this._zDeg;
   }
 
   /**
    * z axis rotation in radiants.
    */
-  public get zRad() {
+  public get z() {
     return this._zRad;
   }
 
   public set z(z: number) {
-    this._z = mapToRotation(z);
-    this._zRad = degToRad(this._z);
+    this._zRad = mapToRad(z);
+    this._zDeg = radToDeg(this._zRad);
   }
 
   public static from(x: Vector3): IRotator {
@@ -118,17 +124,17 @@ export class Rotator3 implements IRotator {
       const vec = v.copy();
 
       // yaw
-      const lengthYaw = Math.sqrt(Math.pow(vec.x, 2) + Math.pow(vec.y, 2));
+      const lengthYaw = Math.sqrt(vec.x ** 2 + vec.y ** 2);
       vec.x = lengthYaw * Math.cos(this._zRad);
       vec.y = lengthYaw * Math.sin(this._zRad);
 
       // pitch
-      const lengthPitch = Math.sqrt(Math.pow(vec.x, 2) + Math.pow(vec.z, 2));
+      const lengthPitch = Math.sqrt(vec.x ** 2 + vec.z ** 2);
       vec.x = lengthPitch * Math.cos(this._yRad);
       vec.z = lengthPitch * Math.sin(this._yRad);
 
       // roll
-      const lengthRoll = Math.sqrt(Math.pow(vec.y, 2) + Math.pow(vec.z, 2));
+      const lengthRoll = Math.sqrt(vec.y ** 2 + vec.z ** 2);
       vec.y = lengthRoll * Math.cos(this._xRad);
       vec.z = lengthRoll * Math.sin(this._xRad);
 
@@ -139,12 +145,22 @@ export class Rotator3 implements IRotator {
   }
 
   public toArray(): [number, number, number] {
-    return [this._x, this._y, this._z];
+    return [this._xRad, this._yRad, this._zRad];
+  }
+
+  public toVector(): Vector3 {
+    return new Vector3(this._xRad, this._yRad, this._zRad);
+  }
+
+  public toString(): string {
+    return `(${this._xDeg.toPrecision(3)}°, ${this._yDeg.toPrecision(
+      3
+    )}°, ${this._zDeg.toPrecision(3)}°)`;
   }
 
   *[Symbol.iterator]() {
-    yield this.x;
-    yield this.y;
-    yield this.z;
+    yield { deg: this._xDeg, rad: this._xRad };
+    yield { deg: this._yDeg, rad: this._yRad };
+    yield { deg: this._zDeg, rad: this._zRad };
   }
 }
