@@ -13,7 +13,7 @@ export class Vector2 implements IVector {
   }
 
   /**
-   * @returns The dimension of this vector at the given index.
+   * @returns The dimensions value of this vector at the given index.
    */
   public get(index: number): number {
     switch (index) {
@@ -56,7 +56,7 @@ export class Vector2 implements IVector {
   /**
    * Adds up the given 2d vector value to this 2d vector.
    */
-  public add(v: Vector2 | number): Vector2 {
+  public add(v: Vector2 | number): this {
     if (typeof v === "number") {
       this.x += v;
       this.y += v;
@@ -82,7 +82,7 @@ export class Vector2 implements IVector {
   /**
    * Subtracts all the given 2d vector values from this 2d vector.
    */
-  public subtract(v: Vector2 | number): Vector2 {
+  public subtract(v: Vector2 | number): this {
     if (typeof v === "number") {
       this.x -= v;
       this.y -= v;
@@ -97,7 +97,7 @@ export class Vector2 implements IVector {
   /**
    * Multiplies this 2d vector by the given scalar.
    */
-  public multiply(scalar: Vector2 | number): Vector2 {
+  public multiply(scalar: Vector2 | number): this {
     if (typeof scalar === "number") {
       this.x *= scalar;
       this.y *= scalar;
@@ -123,7 +123,7 @@ export class Vector2 implements IVector {
   /**
    * Divides this 2d vector by the given scalar.
    */
-  public divide(scalar: Vector2 | number): Vector2 {
+  public divide(scalar: Vector2 | number): this {
     if (typeof scalar === "number") {
       this.x /= scalar;
       this.y /= scalar;
@@ -199,16 +199,27 @@ export class Vector2 implements IVector {
   }
 
   /**
-   * @returns a normalized unit copy of the 2d vector, ensuring it is safe to do so based on the length. Returns zero 2d vector if 2d vector length is too small to safely normalize.
+   * Normalize this 3d vector, ensuring it is safe to do so based on the length. Sets vector to zero if 3d vector length is too small to safely normalize.
    */
-  public normalize(): Vector2 {
+  public normalize(): this {
     const length = this.length();
 
     if (length !== 0) {
-      return new Vector2(this.x / length, this.y / length);
+      this.x /= length;
+      this.y /= length;
     } else {
-      return new Vector2(0, 0);
+      this.x = 0;
+      this.y = 0;
     }
+
+    return this;
+  }
+
+  /**
+   * @returns a normalized unit copy of the 2d vector, ensuring it is safe to do so based on the length. Returns zero 2d vector if 2d vector length is too small to safely normalize.
+   */
+  public getNormal(): Vector2 {
+    return this.copy().normalize();
   }
 
   /**

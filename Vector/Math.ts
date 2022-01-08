@@ -4,6 +4,9 @@ import { Vector2 } from "./Vector2";
 import { findLookAtRotation } from "../Rotator/Math";
 import type { Rotator3 } from "../Rotator/Rotator3";
 
+/**
+ * Calculates the distance between two points.
+ */
 export const distance = <V extends anyVector>(a: V, b: V): number =>
   a.minus(b as any).length();
 
@@ -68,7 +71,7 @@ export const isPointInBox = <V extends anyVector>(
  * @param point Point to test.
  * @param boxOrigin Origin of the box.
  * @param boxExtent Extents of the box (distance in each axis from origin).
- * @param boxRotation Rotation of the box with `boxOrigin` as rotation anchor.
+ * @param boxRotation Rotation of the box in radiants with `boxOrigin` as rotation anchor.
  * @returns Whether the point is in the box.
  */
 export const isPointInRotatedBox: {
@@ -147,28 +150,28 @@ export const vectorBoundedToSphere = <V extends anyVector>(
   radius: number
 ): V => {
   if (vect.length() > radius) {
-    return vect.normalize().multiply(radius) as V;
+    return vect.getNormal().multiply(radius) as V;
   }
 
   return vect.copy() as V;
 };
 
 /**
- * Get the forward (X) unit direction vector from a `Rotator`, in world space.
+ * Get the forward (X) unit direction vector from a `Rotator3`, in world space.
  * @returns The world forward vector by the given rotation.
  */
 export const getForwardVector = (rot: Rotator3) =>
   rot.rotateVector(new Vector3(1, 0, 0));
 
 /**
- * Get the right (Y) unit direction vector from a `Rotator`, in world space.
+ * Get the right (Y) unit direction vector from a `Rotator3`, in world space.
  * @returns The world right vector by the given rotation.
  */
 export const getRightVector = (rot: Rotator3) =>
   rot.rotateVector(new Vector3(0, 1, 0));
 
 /**
- * Get the up (Z) unit direction vector from a `Rotator`, in world space.
+ * Get the up (Z) unit direction vector from a `Rotator3`, in world space.
  * @returns The world up vector by the given rotation.
  */
 export const getUpVector = (rot: Rotator3) =>

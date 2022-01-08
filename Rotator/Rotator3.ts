@@ -1,7 +1,7 @@
 import type { IRotator } from "./IRotator";
 import type { IVector } from "../Vector/IVector";
 import { Vector3 } from "../Vector/Vector3";
-import { radToDeg } from "./Math";
+import { degToRad, radToDeg } from "./Math";
 
 const mapToRad = (rot: number) => {
   while (rot < 0) {
@@ -9,6 +9,14 @@ const mapToRad = (rot: number) => {
   }
 
   return rot % (2 * Math.PI);
+};
+
+const mapToDeg = (rot: number) => {
+  while (rot < 0) {
+    rot += 360;
+  }
+
+  return rot % 360;
 };
 
 /**
@@ -35,13 +43,59 @@ export class Rotator3 implements IRotator {
   /**
    * Create a new rotator from the given radian values.
    */
-  constructor(x: number = 0, y: number = 0, z: number = 0) {
-    this._xRad = mapToRad(x);
-    this._xDeg = radToDeg(this._xRad);
-    this._yRad = mapToRad(y);
-    this._yDeg = radToDeg(this._yRad);
-    this._zRad = mapToRad(z);
-    this._zDeg = radToDeg(this._zRad);
+  constructor(x: number, y: number, z: number, rad: true);
+  /**
+   * Create a new rotator from the given radian values.
+   */
+  constructor(x: number, y: number, z: number);
+
+  /**
+   * Create a new zero rotator.
+   */
+  constructor();
+
+  /**
+   * Create a new rotator from the given degrees values.
+   */
+  constructor(x: number, y: number, z: number, rad: false);
+
+  constructor(
+    x: number = 0,
+    y: number = 0,
+    z: number = 0,
+    rad: boolean = true
+  ) {
+    if (rad) {
+      this._xRad = mapToRad(x);
+      this._xDeg = radToDeg(this._xRad);
+      this._yRad = mapToRad(y);
+      this._yDeg = radToDeg(this._yRad);
+      this._zRad = mapToRad(z);
+      this._zDeg = radToDeg(this._zRad);
+    } else {
+      this._xDeg = mapToDeg(x);
+      this._xRad = degToRad(this._xDeg);
+      this._yDeg = mapToDeg(y);
+      this._yRad = degToRad(this._yDeg);
+      this._zDeg = mapToDeg(z);
+      this._zRad = degToRad(this._zDeg);
+    }
+  }
+
+  /**
+   * Create a new rotator from the given angle values as degrees.
+   */
+  public static from(vec: Vector3): IRotator {
+    if (vec.dimension === 3) {
+      return new Rotator3(
+        (vec as Vector3).x,
+        (vec as Vector3).y,
+        (vec as Vector3).z,
+        true
+      );
+    } else {
+      throw new Error("Invalid dimension for Rotator3.from");
+    }
   }
 
   /**
@@ -101,14 +155,6 @@ export class Rotator3 implements IRotator {
     this._zDeg = radToDeg(this._zRad);
   }
 
-  public static from(x: Vector3): IRotator {
-    if (x.dimension === 3) {
-      return new Rotator3((x as Vector3).x, (x as Vector3).y, (x as Vector3).z);
-    } else {
-      throw new Error("Invalid dimension for Rotator3.from");
-    }
-  }
-
   /**
    * Get the X direction vector after this rotation.
    */
@@ -144,14 +190,33 @@ export class Rotator3 implements IRotator {
     }
   }
 
-  public toArray(): [number, number, number] {
-    return [this._xRad, this._yRad, this._zRad];
+  /**
+   * @returns `Array` that contains the axis rotations.
+   * @param rad If true, the axis values are exported as radiants. If false, they are exported as degrees. Default is radiants.
+   */
+  public toArray(rad: boolean = true): [number, number, number] {
+    if (rad) {
+      return [this._xRad, this._yRad, this._zRad];
+    } else {
+      return [this._xDeg, this._yDeg, this._zDeg];
+    }
   }
 
-  public toVector(): Vector3 {
-    return new Vector3(this._xRad, this._yRad, this._zRad);
+  /**
+   * @returns Converts this rotator to a `Vector3`.
+   * @param rad If true, the axis values are exported as radiants. If false, they are exported as degrees. Default is radiants.
+   */
+  public toVector(rad: boolean = true): Vector3 {
+    if (rad) {
+      return new Vector3(this._xRad, this._yRad, this._zRad);
+    } else {
+      return new Vector3(this._xDeg, this._yDeg, this._zDeg);
+    }
   }
 
+  /**
+   * @returns string representation of this rotator. Values as degrees.
+   */
   public toString(): string {
     return `(${this._xDeg.toPrecision(3)}°, ${this._yDeg.toPrecision(
       3

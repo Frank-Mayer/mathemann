@@ -1,5 +1,5 @@
 /**
- * 4x4 matrix of floating point values.
+ * 2D matrix of fixed size.
  */
 export class Matrix<T = number> {
   /** @internal */
@@ -9,6 +9,12 @@ export class Matrix<T = number> {
     this._data = data;
   }
 
+  /**
+   * Create a new `Matrix` from given axis values.
+   * @param X Values of the first row.
+   * @param Y Values of the first column.
+   * @param merge Marge function to merge x and y values.
+   */
   public static fromAxis<X, Y, T>(
     X: Array<X>,
     Y: Array<Y>,
@@ -22,6 +28,10 @@ export class Matrix<T = number> {
     }
   }
 
+  /**
+   * Calls a defined callback function on each element of this `Matrix`, and returns a new `Matrix` that contains the results.
+   * @param callbackfn A function that accepts up to four arguments. The map method calls the callbackfn function one time for each element in the `Matrix`.
+   */
   public map<U>(cb: (value: T, x: number, y: number, matrix: Matrix<T>) => U) {
     const result = new Array<Array<U>>(this._data.length);
 
@@ -47,16 +57,27 @@ export class Matrix<T = number> {
         row[y] = cb(x, y, cell);
       }
     }
+
+    return this;
   }
 
-  public toArray() {
+  /**
+   * Converts the `Matrix` to a 2D Array
+   */
+  public toArray(): Array<Array<T>> {
     return Array.from(this._data);
   }
 
+  /**
+   * @returns All values in this `Matrix` as an 1D Array.
+   */
   public flat() {
     return this._data.flat();
   }
 
+  /**
+   * @returns String representation of this `Matrix`.
+   */
   public toString() {
     return this._data.map((row) => row.join("\t")).join("\n");
   }

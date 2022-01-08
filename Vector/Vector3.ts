@@ -16,7 +16,7 @@ export class Vector3 implements IVector {
   }
 
   /**
-   * @returns The dimension of this vector at the given index. NaN if index is out of bounds.
+   * @returns The dimensions value of this vector at the given index. NaN if index is out of bounds.
    */
   public get(index: number): number {
     switch (index) {
@@ -64,7 +64,7 @@ export class Vector3 implements IVector {
   /**
    * Adds up the given 3d vector value to this 3d vector.
    */
-  public add(v: Vector3 | number): Vector3 {
+  public add(v: Vector3 | number): this {
     if (typeof v === "number") {
       this.x += v;
       this.y += v;
@@ -92,7 +92,7 @@ export class Vector3 implements IVector {
   /**
    * Subtracts the given 3d vector value from this 3d vector.
    */
-  public subtract(v: Vector3 | number): Vector3 {
+  public subtract(v: Vector3 | number): this {
     if (typeof v === "number") {
       this.x -= v;
       this.y -= v;
@@ -109,7 +109,7 @@ export class Vector3 implements IVector {
   /**
    * Multiplies this 3d vector by the given scalar.
    */
-  public multiply(scalar: Vector3 | number): Vector3 {
+  public multiply(scalar: Vector3 | number): this {
     if (typeof scalar === "number") {
       this.x *= scalar;
       this.y *= scalar;
@@ -141,7 +141,7 @@ export class Vector3 implements IVector {
   /**
    * Divides this 3d vector by the given scalar.
    */
-  public divide(scalar: Vector3 | number): Vector3 {
+  public divide(scalar: Vector3 | number): this {
     if (typeof scalar === "number") {
       this.x /= scalar;
       this.y /= scalar;
@@ -228,16 +228,29 @@ export class Vector3 implements IVector {
   }
 
   /**
-   * @returns a normalized unit copy of the 3d vector, ensuring it is safe to do so based on the length. Returns zero 3d vector if 3d vector length is too small to safely normalize.
+   * Normalize this 3d vector, ensuring it is safe to do so based on the length. Sets vector to zero if 3d vector length is too small to safely normalize.
    */
-  public normalize(): Vector3 {
+  public normalize(): this {
     const length = this.length();
 
     if (length !== 0) {
-      return new Vector3(this.x / length, this.y / length, this.z / length);
+      this.x /= length;
+      this.y /= length;
+      this.z /= length;
     } else {
-      return new Vector3(0, 0, 0);
+      this.x = 0;
+      this.y = 0;
+      this.z = 0;
     }
+
+    return this;
+  }
+
+  /**
+   * @returns a normalized unit copy of the 3d vector, ensuring it is safe to do so based on the length. Returns zero 3d vector if 3d vector length is too small to safely normalize.
+   */
+  public getNormal(): Vector3 {
+    return this.copy().normalize();
   }
 
   /**
