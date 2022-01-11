@@ -1,7 +1,7 @@
 {
   "name": "@frank-mayer/mathemann",
   "displayName": "mathemann",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "Math library",
   "main": "index.js",
