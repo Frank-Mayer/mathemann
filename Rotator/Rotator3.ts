@@ -2,6 +2,7 @@ import type { IRotator } from "./IRotator";
 import type { IVector } from "../Vector/IVector";
 import { Vector3 } from "../Vector/Vector3";
 import { degToRad, radToDeg } from "./Math";
+import { toFixedPrecision } from "../helper";
 
 const mapToRad = (rot: number) => {
   while (rot < 0) {
@@ -218,9 +219,10 @@ export class Rotator3 implements IRotator {
    * @returns string representation of this rotator. Values as degrees.
    */
   public toString(): string {
-    return `(${this._xDeg.toPrecision(3)}°, ${this._yDeg.toPrecision(
+    return `(${toFixedPrecision(this._xDeg, 3)}°, ${toFixedPrecision(
+      this._yDeg,
       3
-    )}°, ${this._zDeg.toPrecision(3)}°)`;
+    )}°, ${toFixedPrecision(this._zDeg, 3)}°)`;
   }
 
   *[Symbol.iterator]() {

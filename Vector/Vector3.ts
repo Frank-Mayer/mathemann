@@ -1,3 +1,4 @@
+import { toFixedPrecision } from "../helper";
 import type { IVector } from "./IVector";
 
 export class Vector3 implements IVector {
@@ -257,7 +258,10 @@ export class Vector3 implements IVector {
    * @returns a string representation of this 3d vector.
    */
   public toString(): string {
-    return `(${this.x.toFixed(3)}, ${this.y.toFixed(3)}, ${this.z.toFixed(3)})`;
+    return `(${toFixedPrecision(this.x, 3)}, ${toFixedPrecision(
+      this.y,
+      3
+    )}, ${toFixedPrecision(this.z, 3)})`;
   }
 
   /**

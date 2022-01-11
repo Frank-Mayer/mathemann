@@ -65,7 +65,7 @@ export class Matrix<T = number> {
    * Converts the `Matrix` to a 2D Array
    */
   public toArray(): Array<Array<T>> {
-    return Array.from(this._data);
+    return this._data.slice();
   }
 
   /**
