@@ -1,11 +1,11 @@
 # mathemann
 
-Math library [![Strict TypeScript Checked](https://badgen.net/badge/TS/Strict "Strict TypeScript Checked")](https://www.typescriptlang.org) [![NPM version](https://img.shields.io/npm/v/@frank-mayer/mathemann.svg)](https://www.npmjs.com/package/@frank-mayer/mathemann)
+Math library [![Strict TypeScript Checked](https://badgen.net/badge/TS/Strict "Strict TypeScript Checked")](https://www.typescriptlang.org) [![NPM version](https://img.shields.io/npm/v/mathemann.svg)](https://www.npmjs.com/package/mathemann)
 
-[Generated Documentation](https://github.com/Frank-Mayer/mathemann/wiki)
+[view generated documentation](https://github.com/Frank-Mayer/mathemann/wiki)
 
 ``` sh
-yarn add @frank-mayer/mathemann
+yarn add mathemann
 ```
 
 ``` typescript
@@ -17,4 +17,8 @@ const b = new Vector3(10, 10.75, 20);
 console.log(findLookAtRotation(a, b).toString());
 ```
 
-![Mathemann](https://github.com/Frank-Mayer/mathemann/blob/main/mathemann.png)
+## TypeScript to Lua
+[tstl (TypeScript to Lua)](https://github.com/TypeScriptToLua/TypeScriptToLua) compatible.
+tstl is currently not able to use npm modules. You have to clone the repository into yours and import from the source (index.ts in root directory) directly.
+
+![Mathemann](https://github.com/Frank-Mayer/mathemann/raw/main/mathemann.png)
